@@ -10,10 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileToggle = document.getElementById('mobile-toggle');
     const navLinks = document.getElementById('nav-links');
 
-    mobileToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
+    function setNavOpen(open) {
+        navLinks.classList.toggle('active', open);
+        document.body.classList.toggle('nav-open', open);
         const spans = mobileToggle.querySelectorAll('span');
-        if (navLinks.classList.contains('active')) {
+        if (open) {
             spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
             spans[1].style.opacity = '0';
             spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
@@ -22,16 +23,23 @@ document.addEventListener('DOMContentLoaded', () => {
             spans[1].style.opacity = '';
             spans[2].style.transform = '';
         }
+    }
+
+    mobileToggle.addEventListener('click', () => {
+        setNavOpen(!navLinks.classList.contains('active'));
     });
 
     navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            navLinks.classList.remove('active');
-            const spans = mobileToggle.querySelectorAll('span');
-            spans[0].style.transform = '';
-            spans[1].style.opacity = '';
-            spans[2].style.transform = '';
-        });
+        link.addEventListener('click', () => setNavOpen(false));
+    });
+
+    // Close drawer when clicking the dimmed background
+    document.body.addEventListener('click', (e) => {
+        if (document.body.classList.contains('nav-open') &&
+            !navLinks.contains(e.target) &&
+            !mobileToggle.contains(e.target)) {
+            setNavOpen(false);
+        }
     });
 
     // Service Tabs
@@ -134,30 +142,56 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Contact form — opens user's email client with form data
+    // Contact form — submits to Netlify Forms (emails go to Benny@gutmansinsurance.com)
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const name = contactForm.querySelector('[name="name"]').value.trim();
-            const email = contactForm.querySelector('[name="email"]').value.trim();
-            const company = contactForm.querySelector('[name="company"]').value.trim();
-            const message = contactForm.querySelector('[name="message"]').value.trim();
+            const formData = new FormData(contactForm);
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
 
-            const subject = encodeURIComponent('New Inquiry from ' + name + (company ? ' at ' + company : ''));
-            const body = encodeURIComponent(
-                'Name: ' + name + '\n' +
-                'Email: ' + email + '\n' +
-                (company ? 'Company: ' + company + '\n' : '') +
-                '\nMessage:\n' + message
-            );
+            try {
+                const body = new URLSearchParams(formData).toString();
+                const response = await fetch('/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: body
+                });
 
-            window.location.href = 'mailto:Benny@gutmansinsurance.com?subject=' + subject + '&body=' + body;
-
-            document.getElementById('success-modal').classList.add('active');
-            contactForm.reset();
+                if (response.ok) {
+                    document.getElementById('success-modal').classList.add('active');
+                    contactForm.reset();
+                } else {
+                    // Fallback to mailto if Netlify isn't handling it (e.g. local preview)
+                    fallbackMailto(formData);
+                }
+            } catch (err) {
+                fallbackMailto(formData);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
+            }
         });
+    }
+
+    function fallbackMailto(formData) {
+        const name = (formData.get('name') || '').trim();
+        const email = (formData.get('email') || '').trim();
+        const company = (formData.get('company') || '').trim();
+        const message = (formData.get('message') || '').trim();
+        const subject = encodeURIComponent('New Inquiry from ' + name + (company ? ' at ' + company : ''));
+        const body = encodeURIComponent(
+            'Name: ' + name + '\n' +
+            'Email: ' + email + '\n' +
+            (company ? 'Company: ' + company + '\n' : '') +
+            '\nMessage:\n' + message
+        );
+        window.location.href = 'mailto:Benny@gutmansinsurance.com?subject=' + subject + '&body=' + body;
+        document.getElementById('success-modal').classList.add('active');
     }
 });
 
