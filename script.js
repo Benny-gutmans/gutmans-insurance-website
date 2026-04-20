@@ -139,31 +139,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Contact form — submits to Netlify Forms (emails go to Benny@gutmansinsurance.com)
+    // Contact form — submits via Formsubmit.co (emails go to Benny@gutmansinsurance.com)
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const formData = new FormData(contactForm);
             const submitBtn = contactForm.querySelector('button[type="submit"]');
             const originalBtnText = submitBtn.textContent;
             submitBtn.disabled = true;
             submitBtn.textContent = 'Sending...';
 
+            const formData = new FormData(contactForm);
+            const payload = {};
+            formData.forEach((value, key) => { payload[key] = value; });
+
             try {
-                const body = new URLSearchParams(formData).toString();
-                const response = await fetch('/', {
+                const response = await fetch(contactForm.action, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: body
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
                 });
 
                 if (response.ok) {
                     document.getElementById('success-modal').classList.add('active');
                     contactForm.reset();
                 } else {
-                    // Fallback to mailto if Netlify isn't handling it (e.g. local preview)
                     fallbackMailto(formData);
                 }
             } catch (err) {

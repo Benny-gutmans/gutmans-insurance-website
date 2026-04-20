@@ -400,9 +400,11 @@
                     <div class="contact-divider"></div>
                     <p class="contact-tagline">We're committed to providing exceptional service and support to help your business thrive.</p>
                 </div>
-                <form class="contact-form" id="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-                    <input type="hidden" name="form-name" value="contact">
-                    <p class="hidden-field"><label>Don't fill this out: <input name="bot-field"></label></p>
+                <form class="contact-form" id="contact-form" action="https://formsubmit.co/ajax/Benny@gutmansinsurance.com" method="POST">
+                    <input type="hidden" name="_subject" value="New Inquiry from Gutmans Insurance Website">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="table">
+                    <p class="hidden-field"><label>Don't fill this out: <input name="_honey"></label></p>
                     <input type="text" name="name" placeholder="Your Name" required>
                     <input type="email" name="email" placeholder="Your Email" required>
                     <input type="text" name="company" placeholder="Company Name">
