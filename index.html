@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gutmans Insurance Brokerage | Employee Benefits Experts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Lato:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <img src="logo.png" alt="Gutman's Insurance Brokerage" class="logo-img">
+            </a>
+            <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#contact" class="btn btn-gold btn-nav">Get Quote</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero" id="hero">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="gold-dot"></span>
+                    Employee Benefits Experts
+                </div>
+                <h1>Comprehensive Benefits for Your Team</h1>
+                <p class="hero-subtitle">Gutmans Insurance Brokerage insures your employees with great benefits that protect your workforce and boost retention.</p>
+                <div class="hero-actions">
+                    <a href="#contact" class="btn btn-gold btn-lg">Schedule Consultation</a>
+                    <a href="#services" class="btn btn-outline-dark btn-lg">Learn More</a>
+                </div>
+                <div class="hero-divider"></div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-value">
+                            <span class="stat-number" data-target="35">0</span><span class="stat-suffix">+</span>
+                        </div>
+                        <span class="stat-label">Years in Business</span>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">
+                            <span class="stat-number" data-target="500">0</span><span class="stat-suffix">+</span>
+                        </div>
+                        <span class="stat-label">Clients Served</span>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">
+                            <span class="stat-number" data-target="50">0</span>
+                        </div>
+                        <span class="stat-label">States</span>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">
+                            <span class="stat-prefix">$</span><span class="stat-number" data-target="3">0</span><span class="stat-suffix">B+</span>
+                        </div>
+                        <span class="stat-label">Benefits Handled</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-image-placeholder">
+                    <img src="enrollment.jpg" alt="Enrollment meeting with employees reviewing benefits documents">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Services</h2>
+                <p>We offer a complete suite of employee benefits solutions tailored to your company's unique needs.</p>
+            </div>
+
+            <div class="service-tabs">
+                <button class="tab-btn active" data-tab="medical">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0L12 5.34l-.77-.76a5.4 5.4 0 0 0-7.65 7.65l.77.76L12 20.65l7.65-7.66.77-.76a5.4 5.4 0 0 0 0-7.65z"/></svg>
+                    Medical Insurance
+                </button>
+                <button class="tab-btn" data-tab="dental">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                    Dental Insurance
+                </button>
+                <button class="tab-btn" data-tab="vision">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                    Vision Insurance
+                </button>
+                <button class="tab-btn" data-tab="life">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3 7h7l-5.5 4.5 2 7L12 16l-6.5 4.5 2-7L2 9h7z"/></svg>
+                    Other Benefits
+                </button>
+            </div>
+
+            <div class="tab-panels">
+                <div class="tab-panel active" id="panel-medical">
+                    <div class="panel-content">
+                        <div class="panel-info">
+                            <div class="panel-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#b8956a" stroke-width="1.5"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0L12 5.34l-.77-.76a5.4 5.4 0 0 0-7.65 7.65l.77.76L12 20.65l7.65-7.66.77-.76a5.4 5.4 0 0 0 0-7.65z"/></svg>
+                            </div>
+                            <h3>Medical Insurance</h3>
+                            <p>Comprehensive health coverage for your employees, including preventive care, hospitalization, and specialist services.</p>
+                            <div class="key-features">
+                                <h4>Key Features:</h4>
+                                <ul>
+                                    <li>Network Research</li>
+                                    <li>High PBM Standard</li>
+                                    <li>Top Reinsurance</li>
+                                    <li>9-5 Live Phone Support</li>
+                                </ul>
+                            </div>
+                            <a href="#contact" class="btn btn-gold">Get Details</a>
+                        </div>
+                        <div class="panel-options">
+                            <h4>Plan Options &amp; More</h4>
+                            <div class="accordion">
+                                <div class="accordion-item">
+                                    <button class="accordion-btn"><span>Fully Insured</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+                                    <div class="accordion-content"><p>Traditional fully insured plans where the carrier assumes all risk. Predictable monthly premiums with comprehensive coverage networks.</p></div>
+                                </div>
+                                <div class="accordion-item">
+                                    <button class="accordion-btn"><span>Self-Insured</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+                                    <div class="accordion-content"><p>Employers fund claims directly with stop-loss protection. Greater flexibility in plan design and potential cost savings for larger groups.</p></div>
+                                </div>
+                                <div class="accordion-item">
+                                    <button class="accordion-btn"><span>Level Funding</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+                                    <div class="accordion-content"><p>A hybrid approach combining predictable monthly costs with the potential for refunds if claims are lower than expected.</p></div>
+                                </div>
+                                <div class="accordion-item">
+                                    <button class="accordion-btn"><span>ICHRA</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+                                    <div class="accordion-content"><p>Individual Coverage Health Reimbursement Arrangement — employers reimburse employees for individual health insurance premiums.</p></div>
+                                </div>
+                                <div class="accordion-item">
+                                    <button class="accordion-btn"><span>And Others</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+                                    <div class="accordion-content"><p>We have more options available to fit your specific situation. Contact us to learn more.</p></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-panel" id="panel-dental">
+                    <div class="panel-content">
+                        <div class="panel-info">
+                            <div class="panel-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#b8956a" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                            </div>
+                            <h3>Dental Insurance</h3>
+                            <p>Preventive, basic, and major dental coverage from leading carriers. Options for orthodontia and implants included.</p>
+                            <div class="key-features">
+                                <h4>Key Features:</h4>
+                                <ul>
+                                    <li>Many Networks Available</li>
+                                    <li>Flexible Coverage Options</li>
+                                    <li>No Waiting Periods Available</li>
+                                    <li>Competitive Group Rates</li>
+                                </ul>
+                            </div>
+                            <a href="#contact" class="btn btn-gold">Get Details</a>
+                        </div>
+                        <div class="panel-options">
+                            <h4>Plan Options &amp; More</h4>
+                            <div class="accordion">
+                                <div class="accordion-item">
+                                    <button class="accordion-btn"><span>Carrier Connections</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+                                    <div class="accordion-content"><p>Because we work with so many groups, we've built strong connections with carriers and can secure special rates you can benefit from.</p></div>
+                                </div>
+                                <div class="accordion-item">
+                                    <button class="accordion-btn"><span>Any Network, Any Plan Design</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+                                    <div class="accordion-content"><p>We work with many carriers to make sure we find the right fit for you — no network or plan structure is off the table.</p></div>
+                                </div>
+                                <div class="accordion-item">
+                                    <button class="accordion-btn"><span>Voluntary Dental</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+                                    <div class="accordion-content"><p>Employee-paid dental benefits at group rates. No cost to the employer while providing valuable coverage to your team.</p></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-panel" id="panel-vision">
+                    <div class="panel-content">
+                        <div class="panel-info">
+                            <div class="panel-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#b8956a" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </div>
+                            <h3>Vision Insurance</h3>
+                            <p>Comprehensive eye care plans covering annual exams, frames, lenses, and contacts at affordable group rates.</p>
+                            <div class="key-features">
+                                <h4>Key Features:</h4>
+                                <ul>
+                                    <li>Annual Eye Exams</li>
+                                    <li>Frames &amp; Contact Lenses</li>
+                                    <li>LASIK Discounts</li>
+                                    <li>Wide Provider Networks</li>
+                                </ul>
+                            </div>
+                            <a href="#contact" class="btn btn-gold">Get Details</a>
+                        </div>
+                        <div class="panel-options">
+                            <h4>Plan Options &amp; More</h4>
+                            <div class="accordion">
+                                <div class="accordion-item">
+                                    <button class="accordion-btn"><span>Many Carriers to Choose From</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+                                    <div class="accordion-content"><p>We work with a wide range of vision carriers, so you have real choice in coverage, networks, and price.</p></div>
+                                </div>
+                                <div class="accordion-item">
+                                    <button class="accordion-btn"><span>A Broker Who Works for You</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+                                    <div class="accordion-content"><p>As your broker, our job is simple — make sure you get exactly what you want. We guide you through the options and advocate for your needs.</p></div>
+                                </div>
+                                <div class="accordion-item">
+                                    <button class="accordion-btn"><span>Voluntary Vision</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+                                    <div class="accordion-content"><p>Employee-paid vision coverage at group-discounted rates, providing excellent value with zero employer cost.</p></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-panel" id="panel-life">
+                    <div class="panel-content">
+                        <div class="panel-info">
+                            <div class="panel-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#b8956a" stroke-width="1.5"><path d="M12 2l3 7h7l-5.5 4.5 2 7L12 16l-6.5 4.5 2-7L2 9h7z"/></svg>
+                            </div>
+                            <h3>Other Benefits</h3>
+                            <p>Whatever employee benefit you need, we're here to help. Beyond medical, dental, and vision, we handle the full range of supplemental, voluntary, and specialty benefits — tailored to your team.</p>
+                            <div class="key-features">
+                                <h4>Our Promise:</h4>
+                                <ul>
+                                    <li>Any Employee Benefit — We Handle It</li>
+                                    <li>Customized to Your Team's Needs</li>
+                                    <li>One Point of Contact for Everything</li>
+                                    <li>Live Support When You Need Us</li>
+                                </ul>
+                            </div>
+                            <a href="#contact" class="btn btn-gold">Get Details</a>
+                        </div>
+                        <div class="panel-options">
+                            <h4>Plan Options &amp; More</h4>
+                            <div class="accordion">
+                                <div class="accordion-item">
+                                    <button class="accordion-btn"><span>Life &amp; AD&amp;D</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+                                    <div class="accordion-content"><p>Basic and voluntary group life insurance with AD&D, offering guaranteed issue amounts and portability options.</p></div>
+                                </div>
+                                <div class="accordion-item">
+                                    <button class="accordion-btn"><span>Disability Insurance</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+                                    <div class="accordion-content"><p>Short-term and long-term disability plans that replace a portion of income when employees can't work due to illness or injury.</p></div>
+                                </div>
+                                <div class="accordion-item">
+                                    <button class="accordion-btn"><span>FSA, HSA &amp; HRA</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+                                    <div class="accordion-content"><p>Tax-advantaged spending and reimbursement accounts that help employees save on healthcare and dependent care expenses.</p></div>
+                                </div>
+                                <div class="accordion-item">
+                                    <button class="accordion-btn"><span>Any Employee Benefit, We're Here For It</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+                                    <div class="accordion-content"><p>Whatever benefit your team needs — if it exists, we handle it. That's what we're here for. One broker, every benefit, fully managed.</p></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="why-us" id="why-us">
+        <div class="container">
+            <div class="section-header">
+                <h2><em>Why Choose Gutmans</em></h2>
+                <p>We combine expertise, personalized service, and innovative solutions to deliver exceptional value.</p>
+            </div>
+            <div class="why-grid">
+                <div class="why-card" data-aos>
+                    <div class="why-dot"></div>
+                    <h3>Expert Advisors</h3>
+                    <p>Our team brings decades of combined experience in employee benefits and insurance planning.</p>
+                </div>
+                <div class="why-card" data-aos>
+                    <div class="why-dot"></div>
+                    <h3>Customized Solutions</h3>
+                    <p>We design benefit packages that align with your company's culture, budget, and employee needs.</p>
+                </div>
+                <div class="why-card" data-aos>
+                    <div class="why-dot"></div>
+                    <h3>Competitive Rates</h3>
+                    <p>Leverage our carrier relationships to secure the best possible rates for your organization.</p>
+                </div>
+                <div class="why-card" data-aos>
+                    <div class="why-dot"></div>
+                    <h3>Ongoing Support</h3>
+                    <p>We provide continuous support, claims assistance, and benefit optimization throughout the year, with live Office support 9-5 Monday through Thursday and 9-12 Friday.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2><em>What Our Clients Say</em></h2>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card" data-aos>
+                    <div class="testimonial-stars">
+                        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 6.36H19l-5.3 4.28 2 6.36L10 13.72 4.3 18l2-6.36L1 7.36h6.61L10 1z"/></svg>
+                        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 6.36H19l-5.3 4.28 2 6.36L10 13.72 4.3 18l2-6.36L1 7.36h6.61L10 1z"/></svg>
+                        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 6.36H19l-5.3 4.28 2 6.36L10 13.72 4.3 18l2-6.36L1 7.36h6.61L10 1z"/></svg>
+                        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 6.36H19l-5.3 4.28 2 6.36L10 13.72 4.3 18l2-6.36L1 7.36h6.61L10 1z"/></svg>
+                        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 6.36H19l-5.3 4.28 2 6.36L10 13.72 4.3 18l2-6.36L1 7.36h6.61L10 1z"/></svg>
+                    </div>
+                    <p>"Gutmans transformed our benefits program. Our employees love the coverage options, and we saved 15% on costs."</p>
+                    <div class="testimonial-author">
+                        <strong>Sarah Mitchell</strong>
+                        <span>HR Director, TechFlow Solutions</span>
+                    </div>
+                </div>
+                <div class="testimonial-card" data-aos>
+                    <div class="testimonial-stars">
+                        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 6.36H19l-5.3 4.28 2 6.36L10 13.72 4.3 18l2-6.36L1 7.36h6.61L10 1z"/></svg>
+                        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 6.36H19l-5.3 4.28 2 6.36L10 13.72 4.3 18l2-6.36L1 7.36h6.61L10 1z"/></svg>
+                        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 6.36H19l-5.3 4.28 2 6.36L10 13.72 4.3 18l2-6.36L1 7.36h6.61L10 1z"/></svg>
+                        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 6.36H19l-5.3 4.28 2 6.36L10 13.72 4.3 18l2-6.36L1 7.36h6.61L10 1z"/></svg>
+                        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 6.36H19l-5.3 4.28 2 6.36L10 13.72 4.3 18l2-6.36L1 7.36h6.61L10 1z"/></svg>
+                    </div>
+                    <p>"The team is incredibly responsive and knowledgeable. They made the entire process seamless."</p>
+                    <div class="testimonial-author">
+                        <strong>Michael Chen</strong>
+                        <span>CEO, Brightpath Logistics</span>
+                    </div>
+                </div>
+                <div class="testimonial-card" data-aos>
+                    <div class="testimonial-stars">
+                        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 6.36H19l-5.3 4.28 2 6.36L10 13.72 4.3 18l2-6.36L1 7.36h6.61L10 1z"/></svg>
+                        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 6.36H19l-5.3 4.28 2 6.36L10 13.72 4.3 18l2-6.36L1 7.36h6.61L10 1z"/></svg>
+                        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 6.36H19l-5.3 4.28 2 6.36L10 13.72 4.3 18l2-6.36L1 7.36h6.61L10 1z"/></svg>
+                        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 6.36H19l-5.3 4.28 2 6.36L10 13.72 4.3 18l2-6.36L1 7.36h6.61L10 1z"/></svg>
+                        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 6.36H19l-5.3 4.28 2 6.36L10 13.72 4.3 18l2-6.36L1 7.36h6.61L10 1z"/></svg>
+                    </div>
+                    <p>"Outstanding service and competitive rates. Gutmans truly cares about their clients' success and helped me save 16% on fixed costs in the first year. I also love that my HR team can call in and get live people on the phone — no answering machines, no endless menus."</p>
+                    <div class="testimonial-author">
+                        <strong>Jennifer Torres</strong>
+                        <span>CFO, Greenleaf Manufacturing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-header section-header-light">
+                <h2><em>Get in Touch</em></h2>
+                <p>Ready to optimize your employee benefits? Contact us today for a free consultation.</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3>Phone</h3>
+                            <p>718.377.7777</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <path d="M22 6l-10 7L2 6"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3>Email</h3>
+                            <p>customerservice@gutmansinsurance.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-divider"></div>
+                    <p class="contact-tagline">We're committed to providing exceptional service and support to help your business thrive.</p>
+                </div>
+                <form class="contact-form" id="contact-form">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Your Email" required>
+                    <input type="text" name="company" placeholder="Company Name">
+                    <textarea name="message" rows="5" placeholder="Tell us about your needs..."></textarea>
+                    <button type="submit" class="btn btn-gold btn-full">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h4>About</h4>
+                    <p>Gutmans Insurance Brokerage is your trusted partner for comprehensive employee benefits solutions.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#services">Medical Insurance</a></li>
+                        <li><a href="#services">Dental Insurance</a></li>
+                        <li><a href="#services">Vision Insurance</a></li>
+                        <li><a href="#services">And More...</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Gutmans Insurance Brokerage. All rights reserved.</p>
+                <a href="https://www.linkedin.com/in/benny-gutman-077ab5312/" target="_blank" rel="noopener noreferrer" class="footer-social">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Form Success Modal -->
+    <div class="modal-overlay" id="success-modal">
+        <div class="modal">
+            <div class="modal-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#b8956a" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <path d="M22 4L12 14.01l-3-3"/>
+                </svg>
+            </div>
+            <h3>Thank You!</h3>
+            <p>Your message has been received. A benefits consultant will contact you within one business day.</p>
+            <button class="btn btn-gold" onclick="closeModal()">Got It</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
