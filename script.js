@@ -10,9 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileToggle = document.getElementById('mobile-toggle');
     const navLinks = document.getElementById('nav-links');
 
+    const navBackdrop = document.getElementById('nav-backdrop');
+
     function setNavOpen(open) {
         navLinks.classList.toggle('active', open);
-        document.body.classList.toggle('nav-open', open);
+        if (navBackdrop) navBackdrop.classList.toggle('active', open);
         const spans = mobileToggle.querySelectorAll('span');
         if (open) {
             spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
@@ -33,14 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
         link.addEventListener('click', () => setNavOpen(false));
     });
 
-    // Close drawer when clicking the dimmed background
-    document.body.addEventListener('click', (e) => {
-        if (document.body.classList.contains('nav-open') &&
-            !navLinks.contains(e.target) &&
-            !mobileToggle.contains(e.target)) {
-            setNavOpen(false);
-        }
-    });
+    if (navBackdrop) {
+        navBackdrop.addEventListener('click', () => setNavOpen(false));
+    }
 
     // Service Tabs
     const tabBtns = document.querySelectorAll('.tab-btn');
