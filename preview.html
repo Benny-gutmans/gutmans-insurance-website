@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Care | Member Provider Lookup</title>
+    <meta name="description" content="Member provider lookup. Enter your plan information to find in-network doctors, specialists, and facilities in your area.">
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+/* Find Care — standalone, brand-neutral member portal */
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --fc-primary: #0f766e;
+    --fc-primary-dark: #115e59;
+    --fc-primary-light: #ccfbf1;
+    --fc-primary-bg: #f0fdfa;
+    --fc-accent: #0ea5e9;
+    --fc-text: #0f172a;
+    --fc-text-muted: #475569;
+    --fc-text-faint: #64748b;
+    --fc-border: #e2e8f0;
+    --fc-border-strong: #cbd5e1;
+    --fc-bg: #f8fafc;
+    --fc-card: #ffffff;
+    --fc-danger: #b91c1c;
+    --fc-radius: 12px;
+    --fc-radius-sm: 8px;
+    --fc-radius-lg: 18px;
+    --fc-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+    --fc-shadow: 0 4px 14px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+    --fc-shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.10);
+    --fc-transition: 0.2s ease;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    color: var(--fc-text);
+    background: var(--fc-bg);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+}
+
+[hidden] { display: none !important; }
+
+/* Layout */
+.fc-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.fc-container-narrow { max-width: 720px; }
+
+.fc-section {
+    padding: 56px 0;
+}
+
+/* Header */
+.fc-header {
+    background: var(--fc-card);
+    border-bottom: 1px solid var(--fc-border);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.fc-header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+}
+
+.fc-brand { display: flex; align-items: center; gap: 12px; }
+
+.fc-brand-mark {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--fc-primary);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.fc-brand-mark svg { width: 20px; height: 20px; }
+
+.fc-brand-text { display: flex; flex-direction: column; line-height: 1.2; }
+.fc-brand-name { font-weight: 700; font-size: 1rem; color: var(--fc-text); }
+.fc-brand-sub { font-size: 0.78rem; color: var(--fc-text-faint); }
+
+.fc-header-link {
+    color: var(--fc-text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color var(--fc-transition);
+}
+.fc-header-link:hover { color: var(--fc-primary); }
+
+/* Hero */
+.fc-hero { padding-top: 64px; }
+.fc-hero-inner { text-align: center; }
+
+.fc-hero h1 {
+    font-size: clamp(1.75rem, 4vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+}
+
+.fc-hero-sub {
+    color: var(--fc-text-muted);
+    font-size: 1.05rem;
+    max-width: 580px;
+    margin: 0 auto 32px;
+}
+
+/* Card */
+.fc-card {
+    background: var(--fc-card);
+    border: 1px solid var(--fc-border);
+    border-radius: var(--fc-radius-lg);
+    box-shadow: var(--fc-shadow);
+    padding: 28px;
+    text-align: left;
+}
+
+/* Form */
+.fc-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px 18px;
+}
+
+.fc-field { display: flex; flex-direction: column; }
+.fc-field-full { grid-column: 1 / -1; }
+
+.fc-field label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--fc-text);
+    margin-bottom: 6px;
+}
+
+.fc-field input,
+.fc-field select,
+.fc-field textarea {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid var(--fc-border-strong);
+    border-radius: var(--fc-radius-sm);
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--fc-text);
+    background: #fff;
+    transition: border-color var(--fc-transition), box-shadow var(--fc-transition);
+}
+
+.fc-field input:focus,
+.fc-field select:focus,
+.fc-field textarea:focus {
+    outline: none;
+    border-color: var(--fc-primary);
+    box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+}
+
+.fc-field textarea { resize: vertical; min-height: 120px; }
+
+.fc-field input[type="file"] {
+    padding: 8px;
+    background: #fff;
+    cursor: pointer;
+}
+
+.fc-field-hint {
+    font-size: 0.78rem;
+    color: var(--fc-text-faint);
+    margin-top: 6px;
+}
+
+.fc-field-error input,
+.fc-field-error select,
+.fc-field-error textarea {
+    border-color: var(--fc-danger);
+    box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.12);
+}
+
+.fc-form-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 22px;
+    flex-wrap: wrap;
+}
+
+.fc-form-note {
+    color: var(--fc-text-faint);
+    font-size: 0.82rem;
+}
+
+/* Buttons */
+.fc-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 20px;
+    border-radius: var(--fc-radius-sm);
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.92rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: var(--fc-transition);
+    text-decoration: none;
+    line-height: 1;
+}
+
+.fc-btn-primary {
+    background: var(--fc-primary);
+    color: #fff;
+    border-color: var(--fc-primary);
+}
+.fc-btn-primary:hover {
+    background: var(--fc-primary-dark);
+    border-color: var(--fc-primary-dark);
+}
+.fc-btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.fc-btn-secondary {
+    background: var(--fc-primary-bg);
+    color: var(--fc-primary-dark);
+    border-color: var(--fc-primary-light);
+}
+.fc-btn-secondary:hover {
+    background: var(--fc-primary-light);
+}
+
+.fc-btn-ghost {
+    background: transparent;
+    color: var(--fc-text-muted);
+    border-color: var(--fc-border-strong);
+}
+.fc-btn-ghost:hover {
+    background: #f1f5f9;
+    color: var(--fc-text);
+}
+
+.fc-btn-lg { padding: 14px 26px; font-size: 1rem; }
+
+.fc-link {
+    background: none;
+    border: none;
+    color: var(--fc-primary);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0;
+}
+.fc-link:hover { text-decoration: underline; }
+
+/* Results */
+.fc-results { background: var(--fc-bg); }
+
+.fc-results-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.fc-results-head h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.fc-summary { padding: 22px 28px; margin-bottom: 18px; }
+
+.fc-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.fc-summary-grid > div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+.fc-summary-grid span {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--fc-text-faint);
+    font-weight: 600;
+}
+.fc-summary-grid strong {
+    font-size: 0.95rem;
+    color: var(--fc-text);
+    font-weight: 600;
+    word-break: break-word;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.fc-copy {
+    background: var(--fc-primary-bg);
+    color: var(--fc-primary-dark);
+    border: 1px solid var(--fc-primary-light);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 0.72rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--fc-transition);
+}
+.fc-copy:hover { background: var(--fc-primary-light); }
+.fc-copy.copied {
+    background: var(--fc-primary);
+    color: #fff;
+    border-color: var(--fc-primary);
+}
+
+/* Directory card */
+.fc-directory { padding: 28px; margin-bottom: 18px; }
+
+.fc-directory-head { margin-bottom: 20px; }
+.fc-directory-head h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+.fc-directory-head p {
+    color: var(--fc-text-muted);
+    font-size: 0.92rem;
+}
+.fc-directory-head em { font-style: normal; font-weight: 600; color: var(--fc-primary-dark); }
+
+.fc-directory-actions { margin-bottom: 24px; }
+
+.fc-specialty-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    border-top: 1px solid var(--fc-border);
+    padding-top: 22px;
+}
+
+.fc-specialty {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: #fff;
+    border: 1px solid var(--fc-border);
+    border-radius: var(--fc-radius);
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--fc-text);
+    cursor: pointer;
+    transition: var(--fc-transition);
+    text-align: left;
+}
+.fc-specialty svg {
+    width: 22px;
+    height: 22px;
+    color: var(--fc-primary);
+    flex-shrink: 0;
+}
+.fc-specialty:hover {
+    border-color: var(--fc-primary);
+    background: var(--fc-primary-bg);
+    transform: translateY(-1px);
+}
+
+/* Help / RBP banner */
+.fc-help-card {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    padding: 24px 28px;
+    background: linear-gradient(180deg, #ffffff 0%, #f0fdfa 100%);
+    border: 1px solid var(--fc-primary-light);
+    border-radius: var(--fc-radius-lg);
+}
+
+.fc-help-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--fc-primary-bg);
+    color: var(--fc-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.fc-help-icon svg { width: 22px; height: 22px; }
+
+.fc-help-text h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+.fc-help-text p {
+    color: var(--fc-text-muted);
+    font-size: 0.92rem;
+    margin-bottom: 14px;
+}
+
+/* Issue section */
+.fc-issue { background: var(--fc-card); border-top: 1px solid var(--fc-border); }
+.fc-issue h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+}
+.fc-issue-sub {
+    color: var(--fc-text-muted);
+    margin-bottom: 24px;
+}
+
+/* Footer */
+.fc-footer {
+    background: var(--fc-card);
+    border-top: 1px solid var(--fc-border);
+    padding: 28px 0;
+    text-align: center;
+    color: var(--fc-text-faint);
+    font-size: 0.85rem;
+}
+
+/* Success modal */
+.fc-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.fc-modal {
+    background: #fff;
+    border-radius: var(--fc-radius-lg);
+    padding: 36px 32px;
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    box-shadow: var(--fc-shadow-lg);
+}
+
+.fc-modal-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--fc-primary-bg);
+    color: var(--fc-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+}
+.fc-modal-icon svg { width: 28px; height: 28px; }
+
+.fc-modal h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; }
+.fc-modal p { color: var(--fc-text-muted); margin-bottom: 20px; }
+
+/* Responsive */
+@media (max-width: 720px) {
+    .fc-section { padding: 40px 0; }
+    .fc-hero { padding-top: 40px; }
+    .fc-form-grid { grid-template-columns: 1fr; }
+    .fc-summary { padding: 18px; }
+    .fc-summary-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .fc-directory { padding: 22px; }
+    .fc-specialty-grid { grid-template-columns: repeat(2, 1fr); }
+    .fc-help-card { flex-direction: column; padding: 20px; }
+    .fc-card { padding: 20px; }
+    .fc-header-link { display: none; }
+}
+
+</style>
+</head>
+<body>
+
+    <header class="fc-header">
+        <div class="fc-container fc-header-inner">
+            <div class="fc-brand">
+                <div class="fc-brand-mark" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                </div>
+                <div class="fc-brand-text">
+                    <span class="fc-brand-name">Find Care</span>
+                    <span class="fc-brand-sub">Member Provider Lookup</span>
+                </div>
+            </div>
+            <a href="#rbp-issue" class="fc-header-link">Need help with a claim?</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Lookup intro + form -->
+        <section class="fc-section fc-hero" id="lookup">
+            <div class="fc-container">
+                <div class="fc-hero-inner">
+                    <h1>Find a doctor in your network</h1>
+                    <p class="fc-hero-sub">Enter your plan information below and we&rsquo;ll point you to the providers, specialists, and facilities available to you in your area.</p>
+
+                    <form id="lookup-form" class="fc-card fc-form" novalidate>
+                        <div class="fc-form-grid">
+                            <div class="fc-field">
+                                <label for="firstName">First name</label>
+                                <input type="text" id="firstName" name="firstName" autocomplete="given-name" required>
+                            </div>
+                            <div class="fc-field">
+                                <label for="lastName">Last name</label>
+                                <input type="text" id="lastName" name="lastName" autocomplete="family-name" required>
+                            </div>
+                            <div class="fc-field">
+                                <label for="groupId">Group ID</label>
+                                <input type="text" id="groupId" name="groupId" autocomplete="off" required>
+                            </div>
+                            <div class="fc-field">
+                                <label for="memberId">Member ID</label>
+                                <input type="text" id="memberId" name="memberId" autocomplete="off" required>
+                            </div>
+                            <div class="fc-field">
+                                <label for="network">Network</label>
+                                <select id="network" name="network" required>
+                                    <option value="" disabled selected>Select your network</option>
+                                    <option value="firsthealth">FirstHealth</option>
+                                    <option value="healthsmart">HealthSmart</option>
+                                    <option value="magnacare">MagnaCare</option>
+                                    <option value="everpoint">Everpoint</option>
+                                    <option value="prime">Prime</option>
+                                    <option value="other">Other (type below)</option>
+                                </select>
+                            </div>
+                            <div class="fc-field" id="otherNetworkField" hidden>
+                                <label for="networkOther">Network name</label>
+                                <input type="text" id="networkOther" name="networkOther" placeholder="Enter your network">
+                            </div>
+                            <div class="fc-field">
+                                <label for="zip">ZIP code</label>
+                                <input type="text" id="zip" name="zip" inputmode="numeric" pattern="\d{5}" maxlength="5" autocomplete="postal-code" required>
+                            </div>
+                        </div>
+                        <div class="fc-form-actions">
+                            <button type="submit" class="fc-btn fc-btn-primary">Find Providers</button>
+                            <p class="fc-form-note">Your information stays in your browser. We don&rsquo;t store it.</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results -->
+        <section class="fc-section fc-results" id="results" hidden>
+            <div class="fc-container">
+                <div class="fc-results-head">
+                    <h2>Your provider search</h2>
+                    <button type="button" class="fc-link" id="editInfoBtn">Edit information</button>
+                </div>
+
+                <div class="fc-card fc-summary">
+                    <div class="fc-summary-grid">
+                        <div><span>Member</span><strong id="sumName">&mdash;</strong></div>
+                        <div><span>Network</span><strong id="sumNetwork">&mdash;</strong></div>
+                        <div><span>Group / Member ID</span><strong id="sumIds">&mdash;</strong></div>
+                        <div>
+                            <span>ZIP</span>
+                            <strong>
+                                <span id="sumZip">&mdash;</span>
+                                <button type="button" class="fc-copy" id="copyZip" title="Copy ZIP">Copy</button>
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fc-card fc-directory">
+                    <div class="fc-directory-head">
+                        <h3 id="directoryHeading">Search providers</h3>
+                        <p id="directoryNote">Open your network&rsquo;s official provider directory below. Most directories ask for your ZIP &mdash; tap <em>Copy</em> above and paste it in.</p>
+                    </div>
+                    <div class="fc-directory-actions">
+                        <a id="primaryDirectoryLink" class="fc-btn fc-btn-primary fc-btn-lg" href="#" target="_blank" rel="noopener noreferrer">Open Directory</a>
+                    </div>
+                    <div class="fc-specialty-grid">
+                        <button type="button" class="fc-specialty" data-specialty="primary care">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>
+                            <span>Primary Care</span>
+                        </button>
+                        <button type="button" class="fc-specialty" data-specialty="specialist">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6.5a3 3 0 0 1-6 0V6"/><path d="M15 2v6.5a3 3 0 0 0 6 0V6"/><path d="M12 22v-7a3 3 0 0 0-3-3"/></svg>
+                            <span>Specialist</span>
+                        </button>
+                        <button type="button" class="fc-specialty" data-specialty="urgent care">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                            <span>Urgent Care</span>
+                        </button>
+                        <button type="button" class="fc-specialty" data-specialty="hospital">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21V12h6v9"/><path d="M12 6v3M10.5 7.5h3"/></svg>
+                            <span>Hospital</span>
+                        </button>
+                        <button type="button" class="fc-specialty" data-specialty="lab">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v6l-5 9a2 2 0 0 0 1.7 3h12.6A2 2 0 0 0 20 18l-5-9V3"/><path d="M8 3h8"/></svg>
+                            <span>Lab / Imaging</span>
+                        </button>
+                        <button type="button" class="fc-specialty" data-specialty="pharmacy">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12h8M12 8v8"/></svg>
+                            <span>Pharmacy</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="fc-help-card" id="rbp-issue">
+                    <div class="fc-help-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+                    </div>
+                    <div class="fc-help-text">
+                        <h3>Trouble finding a provider in your area?</h3>
+                        <p>If your plan uses Reference-Based Pricing (RBP) or you can&rsquo;t find an in-network provider near you, tell us what you need and we&rsquo;ll help.</p>
+                        <button type="button" class="fc-btn fc-btn-secondary" id="openIssueBtn">Get help</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RBP / issue submission -->
+        <section class="fc-section fc-issue" id="issue" hidden>
+            <div class="fc-container fc-container-narrow">
+                <h2>Tell us what you need</h2>
+                <p class="fc-issue-sub">Share the details below and attach any relevant documents (denial letter, EOB, doctor&rsquo;s referral, etc.). Someone will respond as soon as possible.</p>
+
+                <form id="issue-form" class="fc-card fc-form" enctype="multipart/form-data" novalidate>
+                    <div class="fc-form-grid">
+                        <div class="fc-field">
+                            <label for="issueName">Full name</label>
+                            <input type="text" id="issueName" name="name" required>
+                        </div>
+                        <div class="fc-field">
+                            <label for="issueEmail">Email</label>
+                            <input type="email" id="issueEmail" name="email" required>
+                        </div>
+                        <div class="fc-field">
+                            <label for="issuePhone">Phone</label>
+                            <input type="tel" id="issuePhone" name="phone" autocomplete="tel">
+                        </div>
+                        <div class="fc-field">
+                            <label for="issueMemberId">Member ID</label>
+                            <input type="text" id="issueMemberId" name="memberId">
+                        </div>
+                        <div class="fc-field">
+                            <label for="issueGroupId">Group ID</label>
+                            <input type="text" id="issueGroupId" name="groupId">
+                        </div>
+                        <div class="fc-field">
+                            <label for="issueNetwork">Network</label>
+                            <input type="text" id="issueNetwork" name="network">
+                        </div>
+                        <div class="fc-field">
+                            <label for="issueZip">ZIP code</label>
+                            <input type="text" id="issueZip" name="zip" inputmode="numeric" pattern="\d{5}" maxlength="5">
+                        </div>
+                        <div class="fc-field">
+                            <label for="issueType">Type of issue</label>
+                            <select id="issueType" name="issueType" required>
+                                <option value="" disabled selected>Select an option</option>
+                                <option value="No in-network provider in my area">No in-network provider in my area</option>
+                                <option value="RBP claim / balance bill">RBP claim / balance bill</option>
+                                <option value="Provider refusing my plan">Provider refusing my plan</option>
+                                <option value="Need a specialist referral">Need a specialist referral</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="fc-field fc-field-full">
+                            <label for="issueMessage">Describe the issue</label>
+                            <textarea id="issueMessage" name="message" rows="6" required></textarea>
+                        </div>
+                        <div class="fc-field fc-field-full">
+                            <label for="issueAttachments">Attach files (optional)</label>
+                            <input type="file" id="issueAttachments" name="attachments" multiple accept=".pdf,.png,.jpg,.jpeg,.heic,.doc,.docx,.txt">
+                            <span class="fc-field-hint">PDFs, images, or documents. Up to a few MB total.</span>
+                        </div>
+                    </div>
+                    <div class="fc-form-actions">
+                        <button type="submit" class="fc-btn fc-btn-primary">Submit Request</button>
+                        <button type="button" class="fc-btn fc-btn-ghost" id="cancelIssueBtn">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="fc-footer">
+        <div class="fc-container">
+            <p>This portal is for plan members to locate in-network care. If you&rsquo;re experiencing a medical emergency, call 911.</p>
+        </div>
+    </footer>
+
+    <!-- Success modal -->
+    <div class="fc-modal-overlay" id="successModal" hidden>
+        <div class="fc-modal" role="dialog" aria-modal="true" aria-labelledby="successTitle">
+            <div class="fc-modal-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <path d="M22 4 12 14.01l-3-3"/>
+                </svg>
+            </div>
+            <h3 id="successTitle">Request received</h3>
+            <p>Your request has been sent. We&rsquo;ll follow up by email as soon as possible.</p>
+            <button type="button" class="fc-btn fc-btn-primary" id="closeSuccessBtn">Got it</button>
+        </div>
+    </div>
+
+    <script>
+// Find Care — member provider lookup
+//
+// CONFIG: set RBP_SUBMISSION_EMAIL once the destination address is known.
+// Submissions go to this address via formsubmit.co. The first submission to a
+// brand-new address triggers a one-time confirmation email from formsubmit
+// that must be clicked to activate the inbox.
+const RBP_SUBMISSION_EMAIL = 'REPLACE_ME@example.com';
+
+// Per-network directory entry points. ZIP can't be injected into most of
+// these directories via URL, so we rely on the "Copy ZIP" button for paste.
+const NETWORKS = {
+    firsthealth: {
+        name: 'FirstHealth',
+        directoryUrl: 'https://providerlocator.firsthealth.com/'
+    },
+    healthsmart: {
+        name: 'HealthSmart',
+        directoryUrl: 'https://www.healthsmart.com/Networks/HealthSmart-Preferred-Network/Find-a-Provider'
+    },
+    magnacare: {
+        name: 'MagnaCare',
+        directoryUrl: 'https://provider.magnacare.com/'
+    },
+    everpoint: {
+        name: 'Everpoint',
+        directoryUrl: 'https://www.google.com/search?q=Everpoint+network+provider+directory'
+    },
+    prime: {
+        name: 'Prime',
+        directoryUrl: 'https://primehealthservices.com/find-a-provider/'
+    }
+};
+
+const state = {
+    firstName: '',
+    lastName: '',
+    groupId: '',
+    memberId: '',
+    networkKey: '',
+    networkName: '',
+    zip: ''
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const lookupForm = document.getElementById('lookup-form');
+    const networkSelect = document.getElementById('network');
+    const otherWrap = document.getElementById('otherNetworkField');
+    const networkOther = document.getElementById('networkOther');
+
+    const lookupSection = document.getElementById('lookup');
+    const resultsSection = document.getElementById('results');
+    const issueSection = document.getElementById('issue');
+
+    const editInfoBtn = document.getElementById('editInfoBtn');
+    const openIssueBtn = document.getElementById('openIssueBtn');
+    const cancelIssueBtn = document.getElementById('cancelIssueBtn');
+
+    const copyZipBtn = document.getElementById('copyZip');
+    const primaryDirectoryLink = document.getElementById('primaryDirectoryLink');
+    const directoryHeading = document.getElementById('directoryHeading');
+
+    const sumName = document.getElementById('sumName');
+    const sumNetwork = document.getElementById('sumNetwork');
+    const sumIds = document.getElementById('sumIds');
+    const sumZip = document.getElementById('sumZip');
+
+    const issueForm = document.getElementById('issue-form');
+    const successModal = document.getElementById('successModal');
+    const closeSuccessBtn = document.getElementById('closeSuccessBtn');
+
+    // Toggle "Other" network input
+    networkSelect.addEventListener('change', () => {
+        const showOther = networkSelect.value === 'other';
+        otherWrap.hidden = !showOther;
+        networkOther.required = showOther;
+        if (!showOther) networkOther.value = '';
+    });
+
+    // Lookup form submit
+    lookupForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!validateLookup(lookupForm)) return;
+
+        const fd = new FormData(lookupForm);
+        state.firstName = (fd.get('firstName') || '').toString().trim();
+        state.lastName = (fd.get('lastName') || '').toString().trim();
+        state.groupId = (fd.get('groupId') || '').toString().trim();
+        state.memberId = (fd.get('memberId') || '').toString().trim();
+        state.networkKey = (fd.get('network') || '').toString();
+        state.zip = (fd.get('zip') || '').toString().trim();
+
+        if (state.networkKey === 'other') {
+            state.networkName = (fd.get('networkOther') || '').toString().trim() || 'Your network';
+        } else {
+            state.networkName = NETWORKS[state.networkKey] ? NETWORKS[state.networkKey].name : state.networkKey;
+        }
+
+        renderResults();
+        lookupSection.hidden = true;
+        resultsSection.hidden = false;
+        issueSection.hidden = true;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    function validateLookup(form) {
+        let ok = true;
+        form.querySelectorAll('.fc-field').forEach(f => f.classList.remove('fc-field-error'));
+
+        const required = ['firstName', 'lastName', 'groupId', 'memberId', 'network', 'zip'];
+        required.forEach(name => {
+            const el = form.elements[name];
+            if (!el) return;
+            if (!el.value || (name === 'zip' && !/^\d{5}$/.test(el.value))) {
+                el.closest('.fc-field').classList.add('fc-field-error');
+                ok = false;
+            }
+        });
+
+        if (form.elements['network'].value === 'other') {
+            const otherEl = form.elements['networkOther'];
+            if (!otherEl.value.trim()) {
+                otherEl.closest('.fc-field').classList.add('fc-field-error');
+                ok = false;
+            }
+        }
+        return ok;
+    }
+
+    function renderResults() {
+        sumName.textContent = `${state.firstName} ${state.lastName}`;
+        sumNetwork.textContent = state.networkName;
+        sumIds.textContent = `${state.groupId} / ${state.memberId}`;
+        sumZip.textContent = state.zip;
+
+        const cfg = NETWORKS[state.networkKey];
+        let directoryUrl;
+        if (cfg) {
+            directoryUrl = cfg.directoryUrl;
+        } else {
+            // "Other" or unknown — fall back to a Google search
+            const q = encodeURIComponent(`${state.networkName} provider directory`);
+            directoryUrl = `https://www.google.com/search?q=${q}`;
+        }
+
+        primaryDirectoryLink.href = directoryUrl;
+        primaryDirectoryLink.textContent = `Open ${state.networkName} Directory`;
+        directoryHeading.textContent = `Search ${state.networkName} providers near you`;
+
+        // Wire specialty quick-search buttons → Google Maps for {specialty} near {ZIP}
+        document.querySelectorAll('.fc-specialty').forEach(btn => {
+            const specialty = btn.dataset.specialty || '';
+            btn.onclick = () => {
+                const q = encodeURIComponent(`${specialty} near ${state.zip}`);
+                window.open(`https://www.google.com/maps/search/${q}`, '_blank', 'noopener');
+            };
+        });
+    }
+
+    // Edit info → return to form
+    editInfoBtn.addEventListener('click', () => {
+        resultsSection.hidden = true;
+        issueSection.hidden = true;
+        lookupSection.hidden = false;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Copy ZIP
+    copyZipBtn.addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(state.zip);
+            copyZipBtn.classList.add('copied');
+            const original = copyZipBtn.textContent;
+            copyZipBtn.textContent = 'Copied';
+            setTimeout(() => {
+                copyZipBtn.classList.remove('copied');
+                copyZipBtn.textContent = original;
+            }, 1600);
+        } catch (err) {
+            // Fallback: select text manually
+            const range = document.createRange();
+            range.selectNode(sumZip);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+        }
+    });
+
+    // Open issue / RBP form (prefill from state)
+    openIssueBtn.addEventListener('click', () => {
+        document.getElementById('issueName').value = `${state.firstName} ${state.lastName}`.trim();
+        document.getElementById('issueGroupId').value = state.groupId;
+        document.getElementById('issueMemberId').value = state.memberId;
+        document.getElementById('issueNetwork').value = state.networkName;
+        document.getElementById('issueZip').value = state.zip;
+
+        issueSection.hidden = false;
+        issueSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    cancelIssueBtn.addEventListener('click', () => {
+        issueSection.hidden = true;
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    // Issue form submit
+    issueForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!validateIssue(issueForm)) return;
+
+        const submitBtn = issueForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+
+        try {
+            // Add formsubmit.co control fields
+            const fd = new FormData(issueForm);
+            fd.append('_subject', `Member care request — ${fd.get('name') || ''}`);
+            fd.append('_template', 'table');
+            fd.append('_captcha', 'false');
+
+            // formsubmit.co's regular endpoint accepts multipart uploads but
+            // responds with a cross-origin redirect that fetch can't read.
+            // Submit with no-cors so the upload still goes through.
+            await fetch(`https://formsubmit.co/${encodeURIComponent(RBP_SUBMISSION_EMAIL)}`, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: fd
+            });
+
+            successModal.hidden = false;
+            issueForm.reset();
+        } catch (err) {
+            const fd = new FormData(issueForm);
+            fallbackMailto(fd);
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+        }
+    });
+
+    function validateIssue(form) {
+        let ok = true;
+        form.querySelectorAll('.fc-field').forEach(f => f.classList.remove('fc-field-error'));
+        ['name', 'email', 'issueType', 'message'].forEach(name => {
+            const el = form.elements[name];
+            if (!el) return;
+            if (!el.value || (name === 'email' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(el.value))) {
+                el.closest('.fc-field').classList.add('fc-field-error');
+                ok = false;
+            }
+        });
+        return ok;
+    }
+
+    function fallbackMailto(fd) {
+        const subject = encodeURIComponent(`Member care request — ${fd.get('name') || ''}`);
+        const lines = [];
+        ['name', 'email', 'phone', 'memberId', 'groupId', 'network', 'zip', 'issueType'].forEach(k => {
+            const v = fd.get(k);
+            if (v) lines.push(`${k}: ${v}`);
+        });
+        lines.push('');
+        lines.push('Message:');
+        lines.push((fd.get('message') || '').toString());
+        const body = encodeURIComponent(lines.join('\n'));
+        // Note: mailto can't carry attachments. The user will need to attach
+        // them in their own mail client.
+        window.location.href = `mailto:${RBP_SUBMISSION_EMAIL}?subject=${subject}&body=${body}`;
+        successModal.hidden = false;
+    }
+
+    // Close success modal
+    closeSuccessBtn.addEventListener('click', () => {
+        successModal.hidden = true;
+        issueSection.hidden = true;
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    successModal.addEventListener('click', (e) => {
+        if (e.target === successModal) successModal.hidden = true;
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !successModal.hidden) successModal.hidden = true;
+    });
+});
+
+</script>
+</body>
+</html>
