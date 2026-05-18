@@ -9,6 +9,7 @@ Thumbs.db
 .claude/
 candidate_*
 *.tmp
+preview/
 
 # Logs
 *.log
