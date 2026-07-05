@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Lead Tracker — Gutmans Insurance (Internal)</title>
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gold:#b8956a; --gold-light:#c9a97e; --gold-dark:#a07d56; --gold-bg:rgba(184,149,106,0.08);
+    --cream:#f9f8f6; --cream-dark:#f0ede8; --dark:#1a1a1a; --dark-2:#2a2a2a;
+    --text:#1a1a1a; --text-light:#666; --text-muted:#888; --border:#e5e0d8; --white:#fff;
+    --radius:14px; --radius-sm:8px; --shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px -1px rgba(0,0,0,.08);
+    --shadow-hover:0 10px 25px rgba(0,0,0,.08),0 4px 10px rgba(0,0,0,.04);
+    --green:#2f7d55; --green-bg:rgba(47,125,85,.1);
+    --red:#b23b3b; --red-bg:rgba(178,59,59,.1);
+    --blue:#3a6ea5; --blue-bg:rgba(58,110,165,.1);
+    --amber:#b8862a; --amber-bg:rgba(184,134,42,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Lato',sans-serif;background:var(--cream);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:'Playfair Display',serif;font-weight:600;line-height:1.2}
+  a{color:var(--gold-dark);text-decoration:none}
+
+  /* Header */
+  header{background:var(--dark);color:var(--white);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  .brand{display:flex;align-items:center;gap:14px}
+  .brand img{height:40px;width:auto}
+  .brand .title{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:600}
+  .brand .sub{font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-light)}
+  .header-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+  .wrap{max-width:1200px;margin:0 auto;padding:28px 24px 80px}
+
+  /* Buttons */
+  .btn{font-family:'Lato',sans-serif;font-size:.9rem;font-weight:600;border:none;border-radius:var(--radius-sm);padding:10px 18px;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+  .btn-gold{background:var(--gold);color:#fff}
+  .btn-gold:hover{background:var(--gold-dark)}
+  .btn-ghost{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.3)}
+  .btn-ghost:hover{background:rgba(255,255,255,.1)}
+  .btn-outline{background:#fff;color:var(--text);border:1px solid var(--border)}
+  .btn-outline:hover{border-color:var(--gold);color:var(--gold-dark)}
+  .btn-sm{padding:6px 12px;font-size:.8rem}
+  .btn-danger{background:transparent;color:var(--red);border:1px solid transparent}
+  .btn-danger:hover{background:var(--red-bg)}
+
+  /* Stats */
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-bottom:28px}
+  .stat{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow)}
+  .stat .num{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;color:var(--dark);line-height:1}
+  .stat .lbl{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-top:8px}
+  .stat.accent .num{color:var(--gold-dark)}
+  .stat.green .num{color:var(--green)}
+
+  /* Toolbar */
+  .toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:18px}
+  .search{flex:1;min-width:200px;position:relative}
+  .search input{width:100%;padding:11px 14px 11px 38px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:.9rem;font-family:inherit;background:#fff}
+  .search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted)}
+  .search input:focus{outline:none;border-color:var(--gold)}
+  .filters{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font-size:.8rem;font-weight:600;padding:8px 14px;border-radius:20px;border:1px solid var(--border);background:#fff;cursor:pointer;transition:.2s;color:var(--text-light)}
+  .chip:hover{border-color:var(--gold)}
+  .chip.active{background:var(--dark);color:#fff;border-color:var(--dark)}
+
+  /* Table */
+  .card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .table-scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;min-width:820px}
+  th{text-align:left;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);font-weight:700;padding:14px 16px;border-bottom:1px solid var(--border);background:var(--cream);white-space:nowrap}
+  td{padding:14px 16px;border-bottom:1px solid var(--border-light,#ede9e3);font-size:.9rem;vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  tr.row:hover{background:var(--gold-bg)}
+  .company{font-weight:600;color:var(--dark)}
+  .contact-sub{font-size:.8rem;color:var(--text-light);margin-top:2px}
+  .muted{color:var(--text-muted)}
+
+  /* Status badge */
+  .badge{display:inline-block;font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:.03em;white-space:nowrap}
+  .s-new{background:var(--blue-bg);color:var(--blue)}
+  .s-contacted{background:var(--amber-bg);color:var(--amber)}
+  .s-quoted{background:var(--gold-bg);color:var(--gold-dark)}
+  .s-won{background:var(--green-bg);color:var(--green)}
+  .s-lost{background:var(--red-bg);color:var(--red)}
+
+  .renewal-flag{display:inline-flex;align-items:center;gap:4px;font-size:.72rem;font-weight:700;color:var(--red);margin-top:4px}
+
+  .row-actions{display:flex;gap:4px;justify-content:flex-end}
+  .icon-btn{background:none;border:none;cursor:pointer;padding:6px;border-radius:6px;color:var(--text-muted);transition:.2s;display:inline-flex}
+  .icon-btn:hover{background:var(--cream-dark);color:var(--gold-dark)}
+  .icon-btn.del:hover{color:var(--red)}
+
+  .empty{text-align:center;padding:70px 24px;color:var(--text-muted)}
+  .empty svg{color:var(--border);margin-bottom:16px}
+  .empty h3{color:var(--text-light);margin-bottom:8px;font-weight:500}
+
+  /* Modal */
+  .overlay{position:fixed;inset:0;background:rgba(26,26,26,.55);display:none;align-items:flex-start;justify-content:center;padding:40px 16px;z-index:100;overflow-y:auto;backdrop-filter:blur(2px)}
+  .overlay.open{display:flex}
+  .modal{background:#fff;border-radius:var(--radius);width:100%;max-width:620px;box-shadow:var(--shadow-hover);animation:pop .2s ease}
+  @keyframes pop{from{transform:translateY(10px);opacity:0}to{transform:translateY(0);opacity:1}}
+  .modal-head{padding:22px 26px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+  .modal-head h2{font-size:1.35rem}
+  .modal-body{padding:24px 26px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .field{margin-bottom:16px}
+  .field.full{grid-column:1/-1}
+  label{display:block;font-size:.78rem;font-weight:700;color:var(--text-light);margin-bottom:6px;letter-spacing:.02em}
+  input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:.9rem;font-family:inherit;background:#fff;color:var(--text)}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-bg)}
+  textarea{resize:vertical;min-height:70px}
+  .checks{display:flex;flex-wrap:wrap;gap:8px}
+  .check{display:flex;align-items:center;gap:6px;font-size:.85rem;padding:7px 12px;border:1px solid var(--border);border-radius:20px;cursor:pointer;user-select:none}
+  .check input{width:auto}
+  .check.on{background:var(--gold-bg);border-color:var(--gold)}
+  .est{background:var(--cream);border:1px dashed var(--gold-light);border-radius:var(--radius-sm);padding:12px 14px;font-size:.85rem;color:var(--text-light);margin-top:4px}
+  .est b{font-family:'Playfair Display',serif;color:var(--gold-dark);font-size:1.1rem}
+  .modal-foot{padding:18px 26px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:12px;align-items:center}
+
+  .hint{font-size:.78rem;color:var(--text-muted);margin-top:16px;text-align:center}
+  @media(max-width:600px){.grid2{grid-template-columns:1fr}.brand .sub{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <img src="logo.png" alt="Gutmans Insurance">
+    <div>
+      <div class="title">Lead Tracker</div>
+      <div class="sub">Internal &middot; Gutmans Insurance</div>
+    </div>
+  </div>
+  <div class="header-actions">
+    <button class="btn btn-ghost btn-sm" onclick="exportCSV()">Export CSV</button>
+    <button class="btn btn-gold" onclick="openModal()">+ New Lead</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="stats" id="stats"></div>
+
+  <div class="toolbar">
+    <div class="search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="search" type="text" placeholder="Search company, contact, state…" oninput="render()">
+    </div>
+    <div class="filters" id="filters"></div>
+  </div>
+
+  <div class="card">
+    <div class="table-scroll">
+      <table id="table">
+        <thead>
+          <tr>
+            <th>Company / Contact</th>
+            <th>State</th>
+            <th>Group</th>
+            <th>Coverage</th>
+            <th>Est. Annual</th>
+            <th>Renewal</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <div class="empty" id="empty" style="display:none">
+      <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15h6M9 11h2"/></svg>
+      <h3 id="empty-title">No leads yet</h3>
+      <p>Click <b>+ New Lead</b> to capture your first prospect.</p>
+    </div>
+  </div>
+  <p class="hint">Data is saved privately in this browser only. Use <b>Export CSV</b> regularly to back up or share with your team.</p>
+</div>
+
+<!-- Modal -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="modal-title">New Lead</h2>
+      <button class="icon-btn" onclick="closeModal()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="f-id">
+      <div class="grid2">
+        <div class="field"><label>Company name *</label><input id="f-company" placeholder="Acme Corp"></div>
+        <div class="field"><label>Contact name</label><input id="f-contact" placeholder="Jane Smith"></div>
+        <div class="field"><label>Email</label><input id="f-email" type="email" placeholder="jane@acme.com"></div>
+        <div class="field"><label>Phone</label><input id="f-phone" placeholder="(718) 555-0100"></div>
+        <div class="field"><label>State</label><input id="f-state" placeholder="NY" maxlength="20"></div>
+        <div class="field"><label># Employees (eligible)</label><input id="f-emp" type="number" min="0" placeholder="150" oninput="updateEst()"></div>
+      </div>
+      <div class="field full">
+        <label>Coverage interested in</label>
+        <div class="checks" id="coverage"></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><label>Current carrier</label><input id="f-carrier" placeholder="e.g. Aetna"></div>
+        <div class="field"><label>Renewal date</label><input id="f-renewal" type="date"></div>
+        <div class="field"><label>Funding type</label>
+          <select id="f-funding">
+            <option value="">—</option>
+            <option>Fully insured</option>
+            <option>Level funded</option>
+            <option>Self-insured</option>
+            <option>ICHRA</option>
+          </select>
+        </div>
+        <div class="field"><label>Status</label>
+          <select id="f-status">
+            <option value="new">New</option>
+            <option value="contacted">Contacted</option>
+            <option value="quoted">Quoted</option>
+            <option value="won">Won</option>
+            <option value="lost">Lost</option>
+          </select>
+        </div>
+      </div>
+      <div class="field full"><label>Notes</label><textarea id="f-notes" placeholder="Anything worth remembering…"></textarea></div>
+      <div class="est full" id="est-box">Enter employee count for a rough annual premium estimate.</div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-danger btn-sm" id="del-btn" onclick="deleteCurrent()" style="visibility:hidden">Delete</button>
+      <div style="display:flex;gap:10px;margin-left:auto">
+        <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-gold" onclick="saveLead()">Save Lead</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const KEY='gutmans_leads_v1';
+const COVERAGE=['Medical','Dental','Vision','Life','Disability','ICHRA','Other'];
+const STATUSES=[
+  {k:'new',label:'New'},{k:'contacted',label:'Contacted'},
+  {k:'quoted',label:'Quoted'},{k:'won',label:'Won'},{k:'lost',label:'Lost'}
+];
+// Rough average annual medical premium per employee (single) for a ballpark only.
+const AVG_ANNUAL_PER_EMP=8400;
+
+let leads=load();
+let activeFilter='all';
+
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(e){return[]}}
+function save(){localStorage.setItem(KEY,JSON.stringify(leads))}
+function uid(){return 'l'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function esc(s){return(s==null?'':String(s)).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function estAnnual(emp){const n=parseInt(emp,10);return n>0?n*AVG_ANNUAL_PER_EMP:0}
+function money(n){return '$'+Math.round(n).toLocaleString('en-US')}
+
+function daysUntil(dateStr){
+  if(!dateStr)return null;
+  const d=new Date(dateStr+'T00:00:00');const now=new Date();now.setHours(0,0,0,0);
+  return Math.round((d-now)/86400000);
+}
+
+/* ---------- Render ---------- */
+function renderFilters(){
+  const counts={all:leads.length};
+  STATUSES.forEach(s=>counts[s.k]=leads.filter(l=>l.status===s.k).length);
+  const items=[{k:'all',label:'All'},...STATUSES];
+  document.getElementById('filters').innerHTML=items.map(i=>
+    `<button class="chip ${activeFilter===i.k?'active':''}" onclick="setFilter('${i.k}')">${i.label} <span class="muted">${counts[i.k]||0}</span></button>`
+  ).join('');
+}
+function setFilter(k){activeFilter=k;render()}
+
+function renderStats(){
+  const open=leads.filter(l=>['new','contacted','quoted'].includes(l.status));
+  const won=leads.filter(l=>l.status==='won');
+  const pipeline=open.reduce((s,l)=>s+estAnnual(l.emp),0);
+  const wonVal=won.reduce((s,l)=>s+estAnnual(l.emp),0);
+  const renewSoon=leads.filter(l=>{const d=daysUntil(l.renewal);return d!=null&&d>=0&&d<=60&&l.status!=='won'&&l.status!=='lost'}).length;
+  const s=[
+    {num:leads.length,lbl:'Total Leads'},
+    {num:open.length,lbl:'Open',cls:'accent'},
+    {num:money(pipeline),lbl:'Pipeline (est/yr)',cls:'accent'},
+    {num:won.length,lbl:'Won',cls:'green'},
+    {num:renewSoon,lbl:'Renewals ≤60d'}
+  ];
+  document.getElementById('stats').innerHTML=s.map(x=>
+    `<div class="stat ${x.cls||''}"><div class="num">${x.num}</div><div class="lbl">${x.lbl}</div></div>`
+  ).join('');
+}
+
+function render(){
+  renderStats();renderFilters();
+  const q=document.getElementById('search').value.trim().toLowerCase();
+  let rows=leads.slice().sort((a,b)=>(b.created||0)-(a.created||0));
+  if(activeFilter!=='all')rows=rows.filter(l=>l.status===activeFilter);
+  if(q)rows=rows.filter(l=>[l.company,l.contact,l.state,l.carrier,l.notes,l.email].join(' ').toLowerCase().includes(q));
+
+  const tbody=document.getElementById('tbody');
+  const empty=document.getElementById('empty');
+  const table=document.getElementById('table');
+  if(rows.length===0){
+    table.style.display='none';empty.style.display='block';
+    document.getElementById('empty-title').textContent=leads.length?'No matching leads':'No leads yet';
+    empty.querySelector('p').style.display=leads.length?'none':'block';
+    return;
+  }
+  table.style.display='';empty.style.display='none';
+  tbody.innerHTML=rows.map(l=>{
+    const st=STATUSES.find(s=>s.k===l.status)||STATUSES[0];
+    const cov=(l.coverage||[]).length?(l.coverage||[]).map(esc).join(', '):'<span class="muted">—</span>';
+    const est=estAnnual(l.emp);
+    const d=daysUntil(l.renewal);
+    let renewCell='<span class="muted">—</span>';
+    if(l.renewal){
+      const flag=(d!=null&&d>=0&&d<=60&&l.status!=='won'&&l.status!=='lost')
+        ?`<div class="renewal-flag">● ${d===0?'today':d+'d'}</div>`:'';
+      renewCell=`${esc(l.renewal)}${flag}`;
+    }
+    return `<tr class="row">
+      <td><div class="company">${esc(l.company)}</div>
+        ${l.contact?`<div class="contact-sub">${esc(l.contact)}</div>`:''}
+        ${l.email?`<div class="contact-sub"><a href="mailto:${esc(l.email)}">${esc(l.email)}</a></div>`:''}
+        ${l.phone?`<div class="contact-sub muted">${esc(l.phone)}</div>`:''}
+      </td>
+      <td>${esc(l.state)||'<span class="muted">—</span>'}</td>
+      <td>${l.emp?esc(l.emp):'<span class="muted">—</span>'}</td>
+      <td style="max-width:170px">${cov}</td>
+      <td>${est?money(est):'<span class="muted">—</span>'}</td>
+      <td>${renewCell}</td>
+      <td><span class="badge s-${l.status}">${st.label}</span></td>
+      <td><div class="row-actions">
+        <button class="icon-btn" title="Edit" onclick="openModal('${l.id}')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>
+        <button class="icon-btn del" title="Delete" onclick="quickDelete('${l.id}')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+/* ---------- Modal ---------- */
+function renderCoverage(sel){
+  sel=sel||[];
+  document.getElementById('coverage').innerHTML=COVERAGE.map(c=>{
+    const on=sel.includes(c);
+    return `<label class="check ${on?'on':''}"><input type="checkbox" value="${c}" ${on?'checked':''} onchange="this.closest('.check').classList.toggle('on',this.checked)">${c}</label>`;
+  }).join('');
+}
+function getCoverage(){return[...document.querySelectorAll('#coverage input:checked')].map(i=>i.value)}
+
+function updateEst(){
+  const est=estAnnual(document.getElementById('f-emp').value);
+  const box=document.getElementById('est-box');
+  if(est){
+    box.innerHTML=`Ballpark annual medical premium: <b>${money(est)}</b> <span class="muted">(≈ ${money(est/12)}/mo, based on ~${money(AVG_ANNUAL_PER_EMP)}/employee — rough guide only)</span>`;
+  }else{
+    box.textContent='Enter employee count for a rough annual premium estimate.';
+  }
+}
+
+let editingId=null;
+function openModal(id){
+  editingId=id||null;
+  const l=id?leads.find(x=>x.id===id):null;
+  document.getElementById('modal-title').textContent=l?'Edit Lead':'New Lead';
+  document.getElementById('f-id').value=l?l.id:'';
+  document.getElementById('f-company').value=l?l.company||'':'';
+  document.getElementById('f-contact').value=l?l.contact||'':'';
+  document.getElementById('f-email').value=l?l.email||'':'';
+  document.getElementById('f-phone').value=l?l.phone||'':'';
+  document.getElementById('f-state').value=l?l.state||'':'';
+  document.getElementById('f-emp').value=l?l.emp||'':'';
+  document.getElementById('f-carrier').value=l?l.carrier||'':'';
+  document.getElementById('f-renewal').value=l?l.renewal||'':'';
+  document.getElementById('f-funding').value=l?l.funding||'':'';
+  document.getElementById('f-status').value=l?l.status||'new':'new';
+  document.getElementById('f-notes').value=l?l.notes||'':'';
+  renderCoverage(l?l.coverage:[]);
+  updateEst();
+  document.getElementById('del-btn').style.visibility=l?'visible':'hidden';
+  document.getElementById('overlay').classList.add('open');
+  setTimeout(()=>document.getElementById('f-company').focus(),50);
+}
+function closeModal(){document.getElementById('overlay').classList.remove('open');editingId=null}
+
+function saveLead(){
+  const company=document.getElementById('f-company').value.trim();
+  if(!company){alert('Company name is required.');document.getElementById('f-company').focus();return}
+  const data={
+    company,
+    contact:document.getElementById('f-contact').value.trim(),
+    email:document.getElementById('f-email').value.trim(),
+    phone:document.getElementById('f-phone').value.trim(),
+    state:document.getElementById('f-state').value.trim(),
+    emp:document.getElementById('f-emp').value.trim(),
+    carrier:document.getElementById('f-carrier').value.trim(),
+    renewal:document.getElementById('f-renewal').value,
+    funding:document.getElementById('f-funding').value,
+    status:document.getElementById('f-status').value,
+    notes:document.getElementById('f-notes').value.trim(),
+    coverage:getCoverage()
+  };
+  if(editingId){
+    const l=leads.find(x=>x.id===editingId);
+    Object.assign(l,data);l.updated=Date.now();
+  }else{
+    data.id=uid();data.created=Date.now();data.updated=Date.now();
+    leads.push(data);
+  }
+  save();render();closeModal();
+}
+function deleteCurrent(){
+  if(!editingId)return;
+  if(confirm('Delete this lead? This cannot be undone.')){
+    leads=leads.filter(l=>l.id!==editingId);save();render();closeModal();
+  }
+}
+function quickDelete(id){
+  const l=leads.find(x=>x.id===id);
+  if(confirm('Delete "'+(l?l.company:'this lead')+'"? This cannot be undone.')){
+    leads=leads.filter(x=>x.id!==id);save();render();
+  }
+}
+
+/* ---------- Export ---------- */
+function exportCSV(){
+  if(!leads.length){alert('No leads to export yet.');return}
+  const cols=['company','contact','email','phone','state','emp','coverage','carrier','funding','renewal','status','notes'];
+  const head=['Company','Contact','Email','Phone','State','Employees','Coverage','Current Carrier','Funding','Renewal','Status','Notes'];
+  const q=v=>{v=(v==null?'':String(v));return '"'+v.replace(/"/g,'""')+'"'};
+  const lines=[head.map(q).join(',')];
+  leads.forEach(l=>{
+    lines.push(cols.map(c=>q(c==='coverage'?(l.coverage||[]).join('; '):l[c])).join(','));
+  });
+  const blob=new Blob([lines.join('\r\n')],{type:'text/csv;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='gutmans-leads-'+new Date().toISOString().slice(0,10)+'.csv';
+  document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+}
+
+/* ---------- Keyboard ---------- */
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')closeModal();
+});
+document.getElementById('overlay').addEventListener('click',e=>{
+  if(e.target.id==='overlay')closeModal();
+});
+
+render();
+</script>
+</body>
+</html>
