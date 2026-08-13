@@ -6,6 +6,9 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Lead Tracker — Gutmans Insurance (Internal)</title>
 <link rel="icon" type="image/png" href="logo.png">
+<link rel="manifest" href="leads.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#1a1a1a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -447,6 +450,11 @@ document.getElementById('overlay').addEventListener('click',e=>{
 });
 
 render();
+
+// Register the service worker so the app installs and works offline.
+if('serviceWorker' in navigator && location.protocol==='https:'){
+  navigator.serviceWorker.register('leads-sw.js').catch(()=>{});
+}
 </script>
 </body>
 </html>
